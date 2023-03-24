@@ -3,23 +3,15 @@ import { Grid, GridItem, Text } from "@chakra-ui/react";
 import Reciters from "./componenets/Reciters";
 import Chapters from "./componenets/Chapters";
 import QuranPlay from "./componenets/QuranPlay";
+import { useDispatch } from "react-redux";
+import { getReciters } from "./redux-store/slices/reciterSlice";
 
 function App() {
-	const [playlist, setPlaylist] = useState([]);
 	const [chapters, setChapters] = useState([]);
 	const [activeReciter, setActiveReciter] = useState(null);
 	const [activeChapter, setActiveChapter] = useState(null);
+	const dispatch = useDispatch();
 
-	console.log(activeChapter, activeReciter);
-
-	useEffect(() => {
-		const getPaylist = async () => {
-			const res = await fetch("https://mp3quran.net/api/_english.php");
-			const data = await res.json();
-			setPlaylist(data.reciters);
-		};
-		getPaylist();
-	}, []);
 	useEffect(() => {
 		const getChapters = async () => {
 			const res = await fetch("https://api.quran.com/api/v4/chapters");
@@ -28,6 +20,10 @@ function App() {
 		};
 		getChapters();
 	}, []);
+
+	useEffect(() => {
+		dispatch(getReciters());
+	});
 
 	return (
 		<>
@@ -57,7 +53,7 @@ function App() {
 					maxH={activeReciter && activeChapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
-					<Reciters reciters={playlist} setActiveReciter={setActiveReciter} />
+					<Reciters setActiveReciter={setActiveReciter} />
 				</GridItem>
 				<GridItem
 					overflowY="scroll"

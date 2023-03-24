@@ -1,12 +1,14 @@
 import { List, ListItem, ListIcon } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiUserCircle } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
-function Reciters({ reciters, setActiveReciter }) {
+function Reciters({ setActiveReciter }) {
 	const [activeId, setActiveId] = useState();
+	const recitersList = useSelector((state) => state.reciters.reciters);
 	return (
 		<List>
-			{reciters.map((reciter) => {
+			{recitersList.map((reciter) => {
 				return (
 					<ListItem
 						key={reciter.id}
