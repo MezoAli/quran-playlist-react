@@ -9,6 +9,9 @@ import {
 function QuranPlayer({ playlist, activeChapter, activeReciter }) {
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [progressValue, setProgressValue] = useState(0);
+	const audioURL = `${activeReciter.Server}/${("00" + activeChapter.id).slice(
+		-3
+	)}.mp3`;
 	const audioRef = useRef();
 	const progressRef = useRef();
 	const handlePlaying = () => {
@@ -21,6 +24,7 @@ function QuranPlayer({ playlist, activeChapter, activeReciter }) {
 		const progress = (ct / duration) * 100;
 		setProgressValue(progress);
 	};
+	console.log(audioURL);
 
 	useEffect(() => {
 		if (isPlaying) {
@@ -32,17 +36,6 @@ function QuranPlayer({ playlist, activeChapter, activeReciter }) {
 
 	return (
 		<Box py="30px">
-			<Text
-				textAlign="center"
-				p={2}
-				color="teal.400"
-				bg="gray.200"
-				fontWeight="bold"
-				fontSize="22px"
-			>
-				{activeReciter.name} / {activeChapter.name_arabic} /{" "}
-				{activeChapter.name_simple}
-			</Text>
 			<Flex bg="gray.200" justifyContent="center" alignItems="center" p={4}>
 				<Icon
 					as={AiFillStepBackward}
@@ -91,7 +84,7 @@ function QuranPlayer({ playlist, activeChapter, activeReciter }) {
 			{/* https://server6.mp3quran.net/thubti/001.mp3 */}
 			<audio
 				// src={`${playlist[0].Server}/${playlist[0].rewaya}/${playlist[0].count}.mp3`}
-				src={`https://server6.mp3quran.net/thubti/001.mp3`}
+				src={audioURL}
 				ref={audioRef}
 				onTimeUpdate={(e) => detectAudio(e)}
 			/>
