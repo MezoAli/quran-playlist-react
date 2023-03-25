@@ -1,10 +1,12 @@
 import { List, ListItem, ListIcon } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiUserCircle } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveReciter } from "../redux-store/slices/reciterSlice";
 
-function Reciters({ setActiveReciter }) {
+function Reciters() {
 	const [activeId, setActiveId] = useState();
+	const dispatch = useDispatch();
 	const recitersList = useSelector((state) => state.reciters.reciters);
 	return (
 		<List>
@@ -15,7 +17,7 @@ function Reciters({ setActiveReciter }) {
 						py="10px"
 						cursor="pointer"
 						onClick={() => {
-							setActiveReciter(reciter);
+							dispatch(setActiveReciter(reciter));
 							setActiveId(reciter.id);
 						}}
 						color={reciter.id === activeId && "blue.400"}

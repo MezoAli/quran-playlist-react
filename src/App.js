@@ -3,26 +3,20 @@ import { Grid, GridItem, Text } from "@chakra-ui/react";
 import Reciters from "./componenets/Reciters";
 import Chapters from "./componenets/Chapters";
 import QuranPlay from "./componenets/QuranPlay";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getReciters } from "./redux-store/slices/reciterSlice";
+import { getChapters } from "./redux-store/slices/chapterSlice";
 
 function App() {
-	const [chapters, setChapters] = useState([]);
-	const [activeReciter, setActiveReciter] = useState(null);
+	const activeReciter = useSelector((state) => state.reciters.activeReciter);
+	console.log(activeReciter);
+
 	const [activeChapter, setActiveChapter] = useState(null);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const getChapters = async () => {
-			const res = await fetch("https://api.quran.com/api/v4/chapters");
-			const data = await res.json();
-			setChapters(data.chapters);
-		};
-		getChapters();
-	}, []);
-
-	useEffect(() => {
 		dispatch(getReciters());
+		dispatch(getChapters());
 	});
 
 	return (
@@ -53,14 +47,14 @@ function App() {
 					maxH={activeReciter && activeChapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
-					<Reciters setActiveReciter={setActiveReciter} />
+					<Reciters />
 				</GridItem>
 				<GridItem
 					overflowY="scroll"
 					maxH={activeReciter && activeChapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
-					<Chapters chapters={chapters} setActiveChapter={setActiveChapter} />
+					<Chapters setActiveChapter={setActiveChapter} />
 				</GridItem>
 			</Grid>
 		</>

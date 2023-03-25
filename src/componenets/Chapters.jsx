@@ -1,13 +1,15 @@
 import { List, ListItem, ListIcon } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsBook } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
-function Chapters({ chapters, setActiveChapter }) {
+function Chapters({ setActiveChapter }) {
 	const [activeId, setActiveId] = useState();
 
+	const chaptersList = useSelector((state) => state.chapters.chapters);
 	return (
 		<List>
-			{chapters.map((chapter) => {
+			{chaptersList.map((chapter) => {
 				return (
 					<ListItem
 						key={chapter.id}

@@ -11,13 +11,18 @@ export const getReciters = createAsyncThunk(
 
 const initialState = {
 	reciters: [],
+	activeReciter: null,
 	loading: false,
 };
 
 const reciterSlice = createSlice({
 	name: "reciters",
 	initialState,
-	reducers: {},
+	reducers: {
+		setActiveReciter(state, action) {
+			state.activeReciter = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(getReciters.pending, (state) => {
 			state.loading = true;
@@ -29,6 +34,6 @@ const reciterSlice = createSlice({
 	},
 });
 
-// export const {} = reciterSlice.actions;
+export const { setActiveReciter } = reciterSlice.actions;
 
 export default reciterSlice.reducer;
