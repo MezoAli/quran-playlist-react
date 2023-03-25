@@ -11,13 +11,18 @@ export const getChapters = createAsyncThunk(
 
 const initialState = {
 	chapters: [],
+	activeChapter: null,
 	loading: false,
 };
 
 const chapterSlice = createSlice({
 	name: "chapters",
 	initialState,
-	reducers: {},
+	reducers: {
+		setActiveChapter(state, action) {
+			state.activeChapter = action.payload;
+		},
+	},
 	extraReducers: (builder) => {
 		builder.addCase(getChapters.pending, (state) => {
 			state.loading = true;
@@ -29,6 +34,6 @@ const chapterSlice = createSlice({
 	},
 });
 
-// export const {} = reciterSlice.actions;
+export const { setActiveChapter } = chapterSlice.actions;
 
 export default chapterSlice.reducer;

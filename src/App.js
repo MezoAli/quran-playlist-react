@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Grid, GridItem, Text } from "@chakra-ui/react";
 import Reciters from "./componenets/Reciters";
 import Chapters from "./componenets/Chapters";
@@ -9,11 +9,8 @@ import { getChapters } from "./redux-store/slices/chapterSlice";
 
 function App() {
 	const activeReciter = useSelector((state) => state.reciters.activeReciter);
-	console.log(activeReciter);
-
-	const [activeChapter, setActiveChapter] = useState(null);
+	const activechapter = useSelector((state) => state.chapters.activeChapter);
 	const dispatch = useDispatch();
-
 	useEffect(() => {
 		dispatch(getReciters());
 		dispatch(getChapters());
@@ -31,9 +28,9 @@ function App() {
 			>
 				Quran Player
 			</Text>
-			{activeChapter && activeReciter ? (
+			{activechapter && activeReciter ? (
 				<QuranPlay
-					activeChapter={activeChapter}
+					activeChapter={activechapter}
 					activeReciter={activeReciter}
 				/>
 			) : (
@@ -44,17 +41,17 @@ function App() {
 			<Grid templateColumns="repeat(2, 1fr)" gap={{ base: 0, md: 6 }}>
 				<GridItem
 					overflowY="scroll"
-					maxH={activeReciter && activeChapter ? "64vh" : "78vh"}
+					maxH={activeReciter && activechapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
 					<Reciters />
 				</GridItem>
 				<GridItem
 					overflowY="scroll"
-					maxH={activeReciter && activeChapter ? "64vh" : "78vh"}
+					maxH={activeReciter && activechapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
-					<Chapters setActiveChapter={setActiveChapter} />
+					<Chapters />
 				</GridItem>
 			</Grid>
 		</>

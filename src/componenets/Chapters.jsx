@@ -1,10 +1,12 @@
 import { List, ListItem, ListIcon } from "@chakra-ui/react";
 import { useState } from "react";
 import { BsBook } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveChapter } from "../redux-store/slices/chapterSlice";
 
-function Chapters({ setActiveChapter }) {
+function Chapters() {
 	const [activeId, setActiveId] = useState();
+	const dispatch = useDispatch();
 
 	const chaptersList = useSelector((state) => state.chapters.chapters);
 	return (
@@ -16,7 +18,7 @@ function Chapters({ setActiveChapter }) {
 						py="10px"
 						cursor="pointer"
 						onClick={() => {
-							setActiveChapter(chapter);
+							dispatch(setActiveChapter(chapter));
 							setActiveId(chapter.id);
 						}}
 						color={chapter.id === activeId && "blue.400"}
