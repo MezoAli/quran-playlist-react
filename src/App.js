@@ -1,61 +1,24 @@
-import { useEffect } from "react";
-import { Grid, GridItem, Text } from "@chakra-ui/react";
-import Reciters from "./componenets/Reciters";
-import Chapters from "./componenets/Chapters";
-import QuranPlay from "./componenets/QuranPlay";
-import { useDispatch, useSelector } from "react-redux";
-import { getReciters } from "./redux-store/slices/reciterSlice";
-import { getChapters } from "./redux-store/slices/chapterSlice";
+import {
+	createBrowserRouter,
+	createRoutesFromElements,
+	Route,
+	RouterProvider,
+} from "react-router-dom";
+import About from "./componenets/About";
+import Home from "./componenets/Home";
+import RootLayout from "./componenets/RootLayout";
+
+const router = createBrowserRouter(
+	createRoutesFromElements(
+		<Route path="/" element={<RootLayout />}>
+			<Route index element={<Home />} />
+			<Route path="about" element={<About />} />
+		</Route>
+	)
+);
 
 function App() {
-	const activeReciter = useSelector((state) => state.reciters.activeReciter);
-	const activechapter = useSelector((state) => state.chapters.activeChapter);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(getReciters());
-		dispatch(getChapters());
-	});
-
-	return (
-		<>
-			<Text
-				p={4}
-				textAlign="center"
-				backgroundColor="blue.300"
-				color="white"
-				fontSize="30px"
-				fontWeight="bold"
-			>
-				Quran Player
-			</Text>
-			{activechapter && activeReciter ? (
-				<QuranPlay
-					activeChapter={activechapter}
-					activeReciter={activeReciter}
-				/>
-			) : (
-				<Text fontSize="25px" color="blue.400" textAlign="center" py="10px">
-					Please Select Reciter and Chapter
-				</Text>
-			)}
-			<Grid templateColumns="repeat(2, 1fr)" gap={{ base: 0, md: 6 }}>
-				<GridItem
-					overflowY="scroll"
-					maxH={activeReciter && activechapter ? "64vh" : "78vh"}
-					backgroundColor="gray.100"
-				>
-					<Reciters />
-				</GridItem>
-				<GridItem
-					overflowY="scroll"
-					maxH={activeReciter && activechapter ? "64vh" : "78vh"}
-					backgroundColor="gray.100"
-				>
-					<Chapters />
-				</GridItem>
-			</Grid>
-		</>
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;
