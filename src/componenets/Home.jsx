@@ -34,14 +34,14 @@ function Home() {
 					maxH={activeReciter && activechapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
-					<Reciters />
+					<Reciters activeReciter={activeReciter} />
 				</GridItem>
 				<GridItem
 					overflowY="scroll"
 					maxH={activeReciter && activechapter ? "64vh" : "78vh"}
 					backgroundColor="gray.100"
 				>
-					<Chapters />
+					<Chapters activeChapter={activechapter} />
 				</GridItem>
 			</Grid>
 		</>

@@ -1,10 +1,19 @@
-import { Box, Text } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Box, Text, Icon, Tooltip } from "@chakra-ui/react";
 import ReactPlayer from "react-player";
+import { useDispatch } from "react-redux";
+import { addToFavorites } from "../redux-store/slices/favoritesSlice";
+import { useToast } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 function QuranPlay({ activeChapter, activeReciter }) {
 	const audioURL = `${activeReciter.Server}/${("00" + activeChapter.id).slice(
 		-3
 	)}.mp3`;
+
+	const dispatch = useDispatch();
+	const toast = useToast();
+	const navigate = useNavigate();
 	return (
 		<>
 			<Text
@@ -27,6 +36,29 @@ function QuranPlay({ activeChapter, activeReciter }) {
 				p={3}
 			>
 				<ReactPlayer url={audioURL} controls playing height="50px" />
+				<Tooltip label="Add To Favorites">
+					<Icon
+						as={AddIcon}
+						ml="20px"
+						cursor="pointer"
+						onClick={() => {
+							dispatch(
+								addToFavorites({
+									reciter: activeReciter,
+									chapter: activeChapter,
+								})
+							);
+							toast({
+								title: "Success",
+								description: `successfully added ${activeReciter.name} / ${activeChapter.name_simple} to Favorites`,
+								status: "success",
+								duration: 5000,
+								isClosable: true,
+							});
+							navigate("/favorites");
+						}}
+					/>
+				</Tooltip>
 			</Box>
 		</>
 	);

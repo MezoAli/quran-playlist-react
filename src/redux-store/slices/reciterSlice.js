@@ -11,7 +11,8 @@ export const getReciters = createAsyncThunk(
 
 const initialState = {
 	reciters: [],
-	activeReciter: null,
+	activeReciter: {},
+	activeId: null,
 	loading: false,
 };
 

@@ -4,15 +4,15 @@ import {
 	Route,
 	RouterProvider,
 } from "react-router-dom";
-import About from "./componenets/About";
 import Home from "./componenets/Home";
 import RootLayout from "./componenets/RootLayout";
+import Favorites from "./componenets/Favorites";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<RootLayout />}>
 			<Route index element={<Home />} />
-			<Route path="about" element={<About />} />
+			<Route path="favorites" element={<Favorites />} />
 		</Route>
 	)
 );

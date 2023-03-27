@@ -3,6 +3,7 @@ import recitersReducer from "./slices/reciterSlice";
 import chapterReducer from "./slices/chapterSlice";
 import reciterSearchReducer from "./slices/reciterSearchSlice";
 import chapterSearchReducer from "./slices/chapterSearchSlice";
+import favoritesReducer from "./slices/favoritesSlice";
 
 const store = configureStore({
 	reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
 		chapters: chapterReducer,
 		searchReciter: reciterSearchReducer,
 		searchChapter: chapterSearchReducer,
+		favorites: favoritesReducer,
 	},
 });
 

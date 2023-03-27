@@ -1,4 +1,4 @@
-import { Search2Icon, AddIcon } from "@chakra-ui/icons";
+import { Search2Icon } from "@chakra-ui/icons";
 import {
 	List,
 	ListItem,
@@ -6,7 +6,6 @@ import {
 	InputGroup,
 	InputLeftElement,
 	Input,
-	Icon,
 	Text,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
@@ -15,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActiveReciter } from "../redux-store/slices/reciterSlice";
 import { searchReciter } from "../redux-store/slices/reciterSearchSlice";
 
-function Reciters() {
+function Reciters({ activeReciter }) {
 	const [activeId, setActiveId] = useState();
 	const [search, setSearch] = useState("");
 	const dispatch = useDispatch();
@@ -25,6 +24,8 @@ function Reciters() {
 		(state) => state.searchReciter.modifiedRecitersList
 	);
 	// const activeReciter = useSelector((state) => state.reciters.activeReciter);
+	// console.log(activeId);
+	// console.log(activeReciter);
 
 	useEffect(() => {
 		dispatch(searchReciter({ reciters: recitersList, search }));
@@ -50,6 +51,7 @@ function Reciters() {
 							onChange={(e) => setSearch(e.target.value)}
 						/>
 					</InputGroup>
+
 					<List>
 						{modifiedRecitersList.map((reciter) => {
 							return (
@@ -61,14 +63,17 @@ function Reciters() {
 										dispatch(setActiveReciter(reciter));
 										setActiveId(reciter.id);
 									}}
-									color={reciter.id === activeId && "blue.400"}
-									fontWeight={reciter.id === activeId && "bold"}
+									color={
+										reciter.id === (activeId || activeReciter?.id) && "blue.400"
+									}
+									fontWeight={
+										reciter.id === (activeId || activeReciter?.id) && "bold"
+									}
 									display="flex"
 									alignItems="center"
 								>
 									<ListIcon as={BiUserCircle} fontSize="22px" mr="20px" />
 									{reciter.name}
-									<Icon as={AddIcon} display="block" ml="auto" />
 								</ListItem>
 							);
 						})}

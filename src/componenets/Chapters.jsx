@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActiveChapter } from "../redux-store/slices/chapterSlice";
 import { searchChapter } from "../redux-store/slices/chapterSearchSlice";
 
-function Chapters() {
+function Chapters({ activeChapter }) {
 	const [activeId, setActiveId] = useState();
 	const [search, setSearch] = useState("");
 	const dispatch = useDispatch();
@@ -63,8 +63,12 @@ function Chapters() {
 									dispatch(setActiveChapter(chapter));
 									setActiveId(chapter.id);
 								}}
-								color={chapter.id === activeId && "blue.400"}
-								fontWeight={chapter.id === activeId && "bold"}
+								color={
+									chapter.id === (activeId || activeChapter?.id) && "blue.400"
+								}
+								fontWeight={
+									chapter.id === (activeId || activeChapter?.id) && "bold"
+								}
 							>
 								<ListIcon as={BsBook} fontSize="22px" mr="20px" />
 								{chapter.name_simple}

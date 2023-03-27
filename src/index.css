@@ -15,3 +15,6 @@ code {
 .active {
 	color: white;
 }
+.active:hover {
+	color: black;
+}

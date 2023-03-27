@@ -23,7 +23,7 @@ function Navbar() {
 					<NavLink to="/">Home</NavLink>
 				</Button>
 				<Button variant="ghost">
-					<NavLink to="/about">About</NavLink>
+					<NavLink to="/favorites">Favorites</NavLink>
 				</Button>
 			</Stack>
 		</Flex>
