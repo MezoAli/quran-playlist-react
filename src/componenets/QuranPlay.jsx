@@ -35,7 +35,7 @@ function QuranPlay({ activeChapter, activeReciter }) {
 				backgroundColor="gray.200"
 				p={3}
 			>
-				<ReactPlayer url={audioURL} controls playing height="50px" />
+				<ReactPlayer url={audioURL} controls playing={false} height="50px" />
 				<Tooltip label="Add To Favorites">
 					<Icon
 						as={AddIcon}
