@@ -13,9 +13,12 @@ const favoritesSlice = createSlice({
 			state.favoritesList.push({
 				...action.payload.reciter,
 				...action.payload.chapter,
+				audioURL: `${action.payload.reciter.Server}/${(
+					"00" + action.payload.chapter.id
+				).slice(-3)}.mp3`,
 			});
 			const tempURLslist = state.favoritesList.map((item) => {
-				return `${item.Server}/${("00" + item.id).slice(-3)}.mp3`;
+				return item.audioURL;
 			});
 
 			state.favoritesURLs = tempURLslist;

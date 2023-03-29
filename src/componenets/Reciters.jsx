@@ -72,7 +72,11 @@ function Reciters({ activeReciter }) {
 									display="flex"
 									alignItems="center"
 								>
-									<ListIcon as={BiUserCircle} fontSize="22px" mr="20px" />
+									<ListIcon
+										as={BiUserCircle}
+										fontSize={{ base: "16px", md: "22px" }}
+										mr="20px"
+									/>
 									{reciter.name}
 								</ListItem>
 							);

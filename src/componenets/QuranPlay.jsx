@@ -22,7 +22,7 @@ function QuranPlay({ activeChapter, activeReciter }) {
 				color="teal.400"
 				bg="gray.200"
 				fontWeight="bold"
-				fontSize="22px"
+				fontSize={{ base: "16px", md: "22px" }}
 			>
 				{activeReciter.name} / {activeChapter.name_arabic} /{" "}
 				{activeChapter.name_simple}

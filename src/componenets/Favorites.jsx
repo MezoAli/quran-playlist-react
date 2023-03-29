@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import {
 	Table,
@@ -25,27 +25,49 @@ function Favorites() {
 	const favoritesURLlist = useSelector(
 		(state) => state.favorites.favoritesURLs
 	);
-
-	// const [playlist, setPlaylist] = useState(favoritesURLlist);
+	const [playlistDetails, setPlaylistDetails] = useState({});
 	const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
+	const audioRef = useRef();
+	const dispatch = useDispatch();
+	const toast = useToast();
 
 	const handleAudioEnded = () => {
 		setCurrentAudioIndex((currentAudioIndex + 1) % favoritesURLlist.length);
 	};
 
-	console.log(favoritesURLlist);
+	useEffect(() => {
+		const audioUrl = audioRef?.current?.getInternalPlayer().src;
+		const findPlayer = favoritesList.find((item) => {
+			return item.audioURL === audioUrl;
+		});
+		setPlaylistDetails(findPlayer);
+	}, [favoritesList, currentAudioIndex]);
 
-	const dispatch = useDispatch();
-	const toast = useToast();
 	return (
 		<>
 			{favoritesList.length === 0 ? (
-				<Text textAlign="center" fontSize="30px" py="30px" color="teal.400">
+				<Text
+					textAlign="center"
+					fontSize={{ base: "20px", md: "30px" }}
+					py="30px"
+					color="teal.400"
+				>
 					{" "}
 					You Don't Have Any Favorites Yet
 				</Text>
 			) : (
 				<>
+					<Text
+						textAlign="center"
+						p={4}
+						color="teal.400"
+						bg="gray.200"
+						fontWeight="bold"
+						fontSize={{ base: "16px", md: "22px" }}
+					>
+						{playlistDetails?.name} / {playlistDetails?.name_arabic} /{" "}
+						{playlistDetails?.name_simple}
+					</Text>
 					<Box
 						display="flex"
 						justifyContent="center"
@@ -60,6 +82,7 @@ function Favorites() {
 							playing
 							onEnded={handleAudioEnded}
 							height="50px"
+							ref={audioRef}
 						/>
 					</Box>
 					<TableContainer>
