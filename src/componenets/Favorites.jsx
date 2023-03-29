@@ -18,14 +18,17 @@ import ReactPlayer from "react-player";
 
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useDispatch } from "react-redux";
-import { removeFromFavorites } from "../redux-store/slices/favoritesSlice";
+import {
+	removeFromFavorites,
+	setActivePlayer,
+} from "../redux-store/slices/favoritesSlice";
 
 function Favorites() {
 	const favoritesList = useSelector((state) => state.favorites.favoritesList);
+	const activePlayer = useSelector((state) => state.favorites.activePlayer);
 	const favoritesURLlist = useSelector(
 		(state) => state.favorites.favoritesURLs
 	);
-	const [playlistDetails, setPlaylistDetails] = useState({});
 	const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
 	const audioRef = useRef();
 	const dispatch = useDispatch();
@@ -36,12 +39,9 @@ function Favorites() {
 	};
 
 	useEffect(() => {
-		const audioUrl = audioRef?.current?.getInternalPlayer().src;
-		const findPlayer = favoritesList.find((item) => {
-			return item.audioURL === audioUrl;
-		});
-		setPlaylistDetails(findPlayer);
-	}, [favoritesList, currentAudioIndex]);
+		const audioUrl = audioRef?.current?.getInternalPlayer()?.src;
+		dispatch(setActivePlayer({ audioUrl }));
+	}, [currentAudioIndex, dispatch]);
 
 	return (
 		<>
@@ -65,8 +65,8 @@ function Favorites() {
 						fontWeight="bold"
 						fontSize={{ base: "16px", md: "22px" }}
 					>
-						{playlistDetails?.name} / {playlistDetails?.name_arabic} /{" "}
-						{playlistDetails?.name_simple}
+						{activePlayer?.name} / {activePlayer?.name_arabic} /{" "}
+						{activePlayer?.name_simple}
 					</Text>
 					<Box
 						display="flex"

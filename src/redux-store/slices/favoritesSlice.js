@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	favoritesList: [],
 	favoritesURLs: [],
+	activePlayer: {},
 };
 
 const favoritesSlice = createSlice({
@@ -10,6 +11,12 @@ const favoritesSlice = createSlice({
 	initialState,
 	reducers: {
 		addToFavorites(state, action) {
+			const findChapter = state.favoritesList.find((item) => {
+				return item.id === action.payload.chapter.id;
+			});
+			if (findChapter) {
+				return;
+			}
 			state.favoritesList.push({
 				...action.payload.reciter,
 				...action.payload.chapter,
@@ -30,9 +37,17 @@ const favoritesSlice = createSlice({
 
 			state.favoritesList = tempList;
 		},
+		setActivePlayer(state, action) {
+			const audioUrl = action.payload.audioUrl;
+			const activePlayer = state.favoritesList.find((item) => {
+				return item.audioURL === audioUrl;
+			});
+			state.activePlayer = activePlayer;
+		},
 	},
 });
 
-export const { addToFavorites, removeFromFavorites } = favoritesSlice.actions;
+export const { addToFavorites, removeFromFavorites, setActivePlayer } =
+	favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
